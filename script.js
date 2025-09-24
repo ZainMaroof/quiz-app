@@ -1,4 +1,4 @@
-// Firebase config (paste your config)
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCuxsMveMA3c7zt2HKqjWNX-L94ky0Ax3o",
   authDomain: "quiz-app-f810f.firebaseapp.com",
@@ -28,6 +28,7 @@ const questions = [
 
 let i=0, score=0;
 
+// Start Quiz
 function startGame(){ showQ(); }
 
 function showQ(){
@@ -35,33 +36,63 @@ function showQ(){
   document.getElementById('qText').innerText = q.q;
   const opts = document.getElementById('options');
   opts.innerHTML = '';
+
   q.options.forEach((opt,index)=>{
     const b = document.createElement('button');
     b.innerText = opt;
-    b.onclick = ()=>{ if(index===q.ans) score++; nextQ(); };
+    b.onclick = ()=>{
+      Array.from(opts.children).forEach(btn=>btn.disabled=true);
+
+      if(index===q.ans){
+        b.style.background='green';
+        score++;
+      } else {
+        b.style.background='red';
+        opts.children[q.ans].style.background='green';
+      }
+
+      // Enable Next button
+      document.querySelector('button.btn').disabled = false;
+    };
     opts.appendChild(b);
   });
+
+  // Disable Next button until answer selection
+  document.querySelector('button.btn').disabled = true;
 }
 
 function nextQ(){
   i++;
-  if(i<questions.length){ showQ(); } else finish();
+  if(i<questions.length){ 
+    showQ(); 
+  } else finish();
 }
 
+// Finish quiz & push score to Firebase
 function finish(){
   localStorage.setItem('score', score);
   const name = localStorage.getItem('username');
-  db.ref('scores').push({name, score});
-  window.location='result.html';
+
+  // Push score & wait for completion before redirect
+  db.ref('scores').push({name, score}, function(error){
+    if(error){
+      alert("Error saving score: "+error);
+    } else {
+      // Redirect after successful save
+      window.location='result.html';
+    }
+  });
 }
 
+// Load leaderboard - live scores descending
 function loadBoard(){
   const ul = document.getElementById('board');
-  db.ref('scores').orderByChild('score').limitToLast(100)
+  db.ref('scores')
+    .orderByChild('score')
     .on('value', snapshot => {
       const data = [];
       snapshot.forEach(s => data.push(s.val()));
-      data.sort((a,b)=>b.score-a.score);
+      data.sort((a,b)=>b.score - a.score);
       ul.innerHTML='';
       data.forEach(d=>{
         const li = document.createElement('li');
