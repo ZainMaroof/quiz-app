@@ -1,0 +1,7 @@
+body{font-family:Arial;background:#f4f4f4;margin:0;padding:0;}
+.container{max-width:500px;margin:50px auto;background:#fff;
+  padding:20px;border-radius:10px;text-align:center;}
+button{padding:10px 20px;margin-top:20px;font-size:18px;}
+input{padding:8px;width:80%;margin-top:10px;}
+ul{list-style:none;padding:0;}
+li{padding:8px;border-bottom:1px solid #ddd;}

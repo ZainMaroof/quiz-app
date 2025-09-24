@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Maroof Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to the Quiz!</h1>
+    <input id="username" placeholder="Enter your name">
+    <button onclick="startQuiz()">Start Quiz</button>
+  </div>
+
+<script>
+function startQuiz(){
+  const name=document.getElementById('username').value.trim();
+  if(name){ 
+    localStorage.setItem('username',name);
+    window.location='quiz.html';
+  } else alert('Please enter your name');
+}
+</script>
+</body>
+</html>

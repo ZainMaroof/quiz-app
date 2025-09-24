@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Result</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2 id="score"></h2>
+    <a href="leaderboard.html">See Leaderboard</a>
+  </div>
+<script>
+document.getElementById('score').innerText=
+   `Your Score: ${localStorage.getItem('score')}`;
+</script>
+</body>
+</html>
