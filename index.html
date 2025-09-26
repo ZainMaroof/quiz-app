@@ -9,18 +9,14 @@
 <body>
 <div class="container">
   <h1>Quiz Quest</h1>
-  <p>Scan QR or enter your name to start!</p>
+  <p>Enter your name to start or join the quiz!</p>
   <input id="username" placeholder="Enter your name">
   <button class="btn" onclick="startQuiz()">Start Quiz</button>
 </div>
-<script>
-function startQuiz(){
-  const name = document.getElementById('username').value.trim();
-  if(name){
-    localStorage.setItem('username', name);
-    window.location = 'quiz.html';
-  } else alert('Please enter your name');
-}
-</script>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src="script.js"></script> 
+
 </body>
 </html>
